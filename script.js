@@ -52,6 +52,23 @@ const char = {
         if (this.y + this.height + this.velocity.y >= canvas.height-140) {
             this.velocity.y = 0
         } else this.velocity.y += gravity
+
+        if(this.y <= 0){
+          this.y = 0;
+        }
+
+        if(this.y+this.height >= canvas.height){
+          this.y = canvas.height-this.height;
+        }
+
+        if(this.x+this.width >= canvas.width){
+          this.x = canvas.width-this.width;
+        }
+
+        if(this.x <= 0){
+          this.x = 0;
+        }
+
     }
 };
 
@@ -87,19 +104,15 @@ function animate(){
 
     if (keys.ArrowLeft.pressed && char.lastKey === 'ArrowLeft') {
         char.velocity.x = -5
-        console.log('move to left');
     
     } else if (keys.ArrowRight.pressed && char.lastKey === 'ArrowRight') {
         char.velocity.x = 5
-        console.log('move to right');
 
     } else if (keys.ArrowUp.pressed && char.lastKey === 'ArrowUp') {
       char.velocity.y = -5
-      console.log('move to up');
 
     } else if (keys.ArrowDown.pressed && char.lastKey === 'ArrowDown') {
       char.velocity.y = 5
-      console.log('move to down');
     } 
 }
 
@@ -146,11 +159,9 @@ window.addEventListener('keydown', (event) => {
             keys.ArrowLeft.pressed = false
             break
           case 'ArrowUp':
-            console.log('arrowUp false');
             keys.ArrowUp.pressed = false
             break
           case 'ArrowDown':
-            console.log('ArrowDown false');
             keys.ArrowDown.pressed = false
             break
         }
