@@ -1,4 +1,3 @@
-
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
@@ -73,14 +72,71 @@ const char = {
     }
 };
 
+const enemy = new Objeto({
+position: {
+  x: 900,
+  y: 200
+},
+tamanho: {
+  width: 10,
+  height:20
+},
+color: '#fa0',
+velocidade: {
+  x: 0,
+  y: 0
+}
+}
+);
 
+const enemyErrante1 = new ObjetoErrante({
+  position: {
+    x: 950,
+    y: 300
+  },
+  tamanho: {
+    width: 10,
+    height:10
+  },
+  color: '#fa0',
+  velocidade: {
+    x: 0,
+    y: 0
+  },
+  direcao: {
+    x: -1,
+    y: 1
+  }
+});
+
+const enemyErrante2 = new ObjetoErrante({
+  position: {
+    x: 800,
+    y: 300
+  },
+  tamanho: {
+    width: 10,
+    height:10
+  },
+  color: '#fa0',
+  velocidade: {
+    x: 0,
+    y: 0
+  },
+  direcao: {
+    x: -1,
+    y: -1
+  }
+});
 
 function animate(){
     window.requestAnimationFrame(animate);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     char.update();
-    
+    enemy.update();
+    enemyErrante1.update();
+    enemyErrante2.update();
     
     if(keys.ArrowLeft.pressed && keys.ArrowUp.pressed){
       char.velocity.x = -5
