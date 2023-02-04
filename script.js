@@ -89,7 +89,9 @@ velocidade: {
 }
 );
 
-const enemyErrante1 = new ObjetoErrante({
+const listaObjetos = []
+
+listaObjetos.push(new ObjetoErrante({
   position: {
     x: 950,
     y: 300
@@ -107,9 +109,29 @@ const enemyErrante1 = new ObjetoErrante({
     x: -1,
     y: 1
   }
-});
+}));
 
-const enemyErrante2 = new ObjetoErrante({
+listaObjetos.push(new ObjetoErrante({
+  position: {
+    x: 700,
+    y: 100
+  },
+  tamanho: {
+    width: 10,
+    height:10
+  },
+  color: '#fa0',
+  velocidade: {
+    x: 0,
+    y: 0
+  },
+  direcao: {
+    x: -1,
+    y: -1
+  }
+}));
+
+listaObjetos.push(new ObjetoErrante({
   position: {
     x: 800,
     y: 300
@@ -127,7 +149,11 @@ const enemyErrante2 = new ObjetoErrante({
     x: -1,
     y: -1
   }
-});
+}));
+
+
+
+
 
 function animate(){
     window.requestAnimationFrame(animate);
@@ -135,8 +161,10 @@ function animate(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     char.update();
     enemy.update();
-    enemyErrante1.update();
-    enemyErrante2.update();
+    
+    listaObjetos.forEach((o)=>{
+      o.update();
+    })
     
     if(keys.ArrowLeft.pressed && keys.ArrowUp.pressed){
       char.velocity.x = -5

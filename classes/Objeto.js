@@ -33,8 +33,6 @@ class ObjetoErrante extends Objeto{
     
 
     update(){
-        
-        
 
         if(this.position.x <= 0){
             this.direcao.x = -1;
