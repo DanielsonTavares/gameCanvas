@@ -1,6 +1,6 @@
 class Objeto{
     constructor({position, velocidade, color, tamanho}){
-        
+
         this.position = position;
         this.tamanho = tamanho;
         this.color = color;
@@ -29,8 +29,8 @@ class ObjetoErrante extends Objeto{
         super({position, velocidade, color, tamanho})
         this.direcao = direcao;
     }
-    
-    
+
+
 
     update(){
 
@@ -50,6 +50,143 @@ class ObjetoErrante extends Objeto{
         this.velocidade.y = -5.5 * this.direcao.y
 
         super.update();
+
+    }
+}
+
+class Char extends Objeto{
+    constructor({position, velocidade, color, tamanho}){
+        super({position, velocidade, color, tamanho})
+
         
+        this.projetil = {
+            x: 0, 
+            y: 0, 
+            width: 16, 
+            height: 4,
+            visivel: false
+        };
+
+        this.disparo = 0;
+
+        this.direcao = {
+            cima: 0,
+            direita:1,
+            baixo:0,
+            esquerda:0
+        }
+    }
+
+    setDirecao(param){
+        switch (param) {
+            case 'cima':
+                this.direcao.cima = 1;
+                this.direcao.direita = 0;
+                this.direcao.baixo = 0;
+                this.direcao.esquerda = 0;
+                break;
+            case 'direita':
+                this.direcao.cima = 0;
+                this.direcao.direita = 1;
+                this.direcao.baixo = 0;
+                this.direcao.esquerda = 0;
+                break;
+            case 'baixo':
+                this.direcao.cima = 0;
+                this.direcao.direita = 0;
+                this.direcao.baixo = 1;
+                this.direcao.esquerda = 0;
+                break;
+            case 'esquerda':
+                this.direcao.cima = 0;
+                this.direcao.direita = 0;
+                this.direcao.baixo = 0;
+                this.direcao.esquerda = 1;
+                break;
+            default:
+                break;
+        }
+    }
+
+    checkDirecao(){
+
+        if(this.direcao.cima == 1){
+            this.projetil.y = this.position.y-this.tamanho.height/2;
+            this.projetil.x = this.position.x+this.tamanho.width/2;
+            this.projetil.width = 4;
+            this.projetil.height = -16;
+        } else if(this.direcao.direita == 1){
+            this.projetil.y = this.position.y
+            this.projetil.x = this.position.x + this.tamanho.width
+            this.projetil.width = 16;
+            this.projetil.height = 4;
+        }else if (this.direcao.baixo == 1){
+            this.projetil.y = this.position.y+this.tamanho.height/2;
+            this.projetil.x = this.position.x+this.tamanho.width/2;
+            this.projetil.width = 4;
+            this.projetil.height = 16;
+        }else if(this.direcao.esquerda == 1){
+            this.projetil.y = this.position.y;
+            this.projetil.x = this.position.x;
+            this.projetil.width = -16;
+            this.projetil.height = 4;
+        }
+
+
+    }
+
+    draw(){
+        super.draw();
+
+        this.x += this.velocidade.x
+        this.y += this.velocidade.y
+
+        this.velocidade.x = 0
+        this.velocidade.y = 0 //Desabilitar para ter o efeito da gravidade
+
+        if(this.projetil.visivel){
+            ctx.fillStyle = "#FF0000";
+            ctx.fillRect(this.projetil.x, this.projetil.y+this.tamanho.height/2, this.projetil.width, this.projetil.height);
+        }
+        
+
+    }
+
+    update(){
+        super.update();
+
+        // Gravidade
+        // if (this.position.y + this.height + this.velocidade.y >= canvas.height-140) {
+        //     this.velocidade.y = 0
+        // } else this.velocidade.y += gravity
+
+
+        if(this.disparo === 0){
+            this.checkDirecao();
+        }else{
+            this.projetil.x += 20;
+            
+        }
+        
+
+        
+        
+
+        // Colisão com os limites da tela
+        if(this.position.y <= 0){
+            this.position.y = 0;
+        }
+
+        if(this.position.x <= 0){
+            this.position.x = 0;
+        }
+
+        if(this.position.y+this.tamanho.height >= canvas.height){
+            this.position.y = canvas.height-this.tamanho.height;
+        }
+
+        if(this.position.x+this.tamanho.width >= canvas.width){
+            this.position.x = canvas.width-this.tamanho.width;
+        }
     }
 }

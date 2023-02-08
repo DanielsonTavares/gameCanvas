@@ -24,53 +24,12 @@ const keys = {
     }
   }
 
-const char = {
-    x: 0, 
-    y: 100,
-    width: 40,
-    height: 40,
-    lastKey: undefined,
-    velocity: {x: 0, y: 0},
-    
-    draw: function (){
-        
-        ctx.fillStyle = "#FF0000";
-        ctx.fillRect(char.x, char.y, this.width, this.height);
-    },
-    update: function (){
-        this.draw();
-        this.x += this.velocity.x
-        this.y += this.velocity.y
-        
-        this.velocity.x = 0
-        this.velocity.y = 0 //Desabilitar para ter o efeito da gravidade
+const char2 = new Char({
+  position: {x:0, y:300},
+  tamanho: {width:40, height:40},
+  color: '#FFFF00'
+});
 
-
-
-        // Gravidade
-        // if (this.y + this.height + this.velocity.y >= canvas.height-140) {
-        //     this.velocity.y = 0
-        // } else this.velocity.y += gravity
-
-        // Colisão com os limites da tela
-        if(this.y <= 0){
-          this.y = 0;
-        }
-
-        if(this.x <= 0){
-          this.x = 0;
-        }
-
-        if(this.y+this.height >= canvas.height){
-          this.y = canvas.height-this.height;
-        }
-
-        if(this.x+this.width >= canvas.width){
-          this.x = canvas.width-this.width;
-        }
-
-    }
-};
 
 const enemy = new Objeto({
 position: {
@@ -159,31 +118,37 @@ function animate(){
     window.requestAnimationFrame(animate);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    char.update();
+    
+    char2.update();
     enemy.update();
     
     listaObjetos.forEach((o)=>{
       o.update();
     })
     
+    
+    
+    
+
+
     if(keys.ArrowLeft.pressed && keys.ArrowUp.pressed){
-      char.velocity.x = -5
-      char.velocity.y = -5
+      char2.velocidade.x = -5
+      char2.velocidade.y = -5
     }
 
     if(keys.ArrowLeft.pressed && keys.ArrowDown.pressed){
-      char.velocity.x = -5
-      char.velocity.y = 5
+      char2.velocidade.x = -5
+      char2.velocidade.y = 5
     }
 
     if(keys.ArrowRight.pressed && keys.ArrowUp.pressed){
-      char.velocity.x = 5
-      char.velocity.y = -5
+      char2.velocidade.x = 5
+      char2.velocidade.y = -5
     }
 
     if(keys.ArrowRight.pressed && keys.ArrowDown.pressed){
-      char.velocity.x = 5
-      char.velocity.y = 5
+      char2.velocidade.x = 5
+      char2.velocidade.y = 5
     }
 
 
@@ -204,16 +169,20 @@ function animate(){
     // } 
 
     if (keys.ArrowLeft.pressed ) {
-        char.velocity.x = -5
+        char2.velocidade.x = -5
+        char2.setDirecao('esquerda')
     
     } else if (keys.ArrowRight.pressed ) {
-        char.velocity.x = 5
+        char2.velocidade.x = 5
+        char2.setDirecao('direita')
 
     } else if (keys.ArrowUp.pressed ) {
-      char.velocity.y = -5
+      char2.velocidade.y = -5
+      char2.setDirecao('cima')
 
     } else if (keys.ArrowDown.pressed ) {
-      char.velocity.y = 5
+      char2.velocidade.y = 5
+      char2.setDirecao('baixo')
     } 
 }
 
@@ -227,25 +196,28 @@ window.addEventListener('keydown', (event) => {
       switch (event.key) {
         case 'ArrowRight':
           keys.ArrowRight.pressed = true
-          char.lastKey = 'ArrowRight'
+          char2.lastKey = 'ArrowRight'
           break
         case 'ArrowLeft':
           keys.ArrowLeft.pressed = true
-          char.lastKey = 'ArrowLeft'
+          char2.lastKey = 'ArrowLeft'
           break
         case 'ArrowUp':
           keys.ArrowUp.pressed = true
-          char.lastKey = 'ArrowUp'
+          char2.lastKey = 'ArrowUp'
           break
         case 'ArrowDown':
           keys.ArrowDown.pressed = true
-          char.lastKey = 'ArrowDown'
+          char2.lastKey = 'ArrowDown'
           break
         case 'w':
-          char.velocity.y = -20
+          char2.velocity.y = -20
           break
         case ' ':
-          console.log('attack successul');
+          char2.projetil.visivel = true;
+          setTimeout(()=>{
+            char2.projetil.visivel = false
+          }, 200)
           break
       }
 
