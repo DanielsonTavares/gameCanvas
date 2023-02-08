@@ -65,8 +65,8 @@ class Char extends Objeto{
             width: 0, 
             height: 0,
             visivel: false,
-            widthDefault: 30,
-            heightDefault: 16
+            widthDefault: 100,
+            heightDefault: 60
         };
 
         this.disparo = 0;
@@ -112,28 +112,50 @@ class Char extends Objeto{
 
     checkDirecao(){
 
+        // if(this.direcao.cima == 1){
+        //     this.projetil.y = this.position.y-this.tamanho.height;
+        //     this.projetil.x = this.position.x+ this.projetil.widthDefault/4;
+        //     this.projetil.width = this.projetil.heightDefault;
+        //     this.projetil.height = this.projetil.widthDefault;
+        // } else if(this.direcao.direita == 1){
+        //     this.projetil.y = this.position.y-this.projetil.heightDefault/2;
+        //     this.projetil.x = this.position.x + this.tamanho.width
+        //     this.projetil.width = this.projetil.widthDefault;
+        //     this.projetil.height = this.projetil.heightDefault;
+        // }else if (this.direcao.baixo == 1){
+        //     this.projetil.y = this.position.y+this.tamanho.height/2;
+        //     this.projetil.x = this.position.x+this.tamanho.width/4;
+        //     this.projetil.width = this.projetil.heightDefault;
+        //     this.projetil.height = this.projetil.widthDefault;
+        // }else if(this.direcao.esquerda == 1){
+        //     this.projetil.y = this.position.y-this.projetil.heightDefault/2;
+        //     this.projetil.x = this.position.x;
+        //     this.projetil.width = -this.projetil.widthDefault;
+        //     this.projetil.height = this.projetil.heightDefault;
+        // }
+
+
         if(this.direcao.cima == 1){
-            this.projetil.y = this.position.y-this.tamanho.height;
-            this.projetil.x = this.position.x+ this.projetil.widthDefault/4;
+            this.projetil.y = this.position.y-this.projetil.height;  
+            this.projetil.x = this.position.x + this.tamanho.width/2 - (this.projetil.width/2);
             this.projetil.width = this.projetil.heightDefault;
             this.projetil.height = this.projetil.widthDefault;
         } else if(this.direcao.direita == 1){
-            this.projetil.y = this.position.y-this.projetil.heightDefault/2;
+            this.projetil.y = this.position.y + this.tamanho.height/2 - (this.projetil.height/2);
             this.projetil.x = this.position.x + this.tamanho.width
             this.projetil.width = this.projetil.widthDefault;
             this.projetil.height = this.projetil.heightDefault;
         }else if (this.direcao.baixo == 1){
-            this.projetil.y = this.position.y+this.tamanho.height/2;
-            this.projetil.x = this.position.x+this.tamanho.width/4;
+            this.projetil.y = this.position.y+this.tamanho.height;
+            this.projetil.x = this.position.x + this.tamanho.width/2 - (this.projetil.width/2);
             this.projetil.width = this.projetil.heightDefault;
             this.projetil.height = this.projetil.widthDefault;
         }else if(this.direcao.esquerda == 1){
-            this.projetil.y = this.position.y-this.projetil.heightDefault/2;
+            this.projetil.y = this.position.y + this.tamanho.height/2 - (this.projetil.height/2);
             this.projetil.x = this.position.x;
             this.projetil.width = -this.projetil.widthDefault;
             this.projetil.height = this.projetil.heightDefault;
         }
-
 
     }
 
@@ -148,7 +170,8 @@ class Char extends Objeto{
 
         if(this.projetil.visivel){
             ctx.fillStyle = "#FF0000";
-            ctx.fillRect(this.projetil.x, this.projetil.y+this.tamanho.height/2, this.projetil.width, this.projetil.height);
+            //ctx.fillRect(this.projetil.x, this.projetil.y+this.tamanho.height/2, this.projetil.width, this.projetil.height);
+            ctx.fillRect(this.projetil.x, this.projetil.y, this.projetil.width, this.projetil.height);
         }
         
 
