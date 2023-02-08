@@ -62,9 +62,11 @@ class Char extends Objeto{
         this.projetil = {
             x: 0, 
             y: 0, 
-            width: 16, 
-            height: 4,
-            visivel: false
+            width: 0, 
+            height: 0,
+            visivel: false,
+            widthDefault: 30,
+            heightDefault: 16
         };
 
         this.disparo = 0;
@@ -111,25 +113,25 @@ class Char extends Objeto{
     checkDirecao(){
 
         if(this.direcao.cima == 1){
-            this.projetil.y = this.position.y-this.tamanho.height/2;
-            this.projetil.x = this.position.x+this.tamanho.width/2;
-            this.projetil.width = 4;
-            this.projetil.height = -16;
+            this.projetil.y = this.position.y-this.tamanho.height;
+            this.projetil.x = this.position.x+ this.projetil.widthDefault/4;
+            this.projetil.width = this.projetil.heightDefault;
+            this.projetil.height = this.projetil.widthDefault;
         } else if(this.direcao.direita == 1){
-            this.projetil.y = this.position.y
+            this.projetil.y = this.position.y-this.projetil.heightDefault/2;
             this.projetil.x = this.position.x + this.tamanho.width
-            this.projetil.width = 16;
-            this.projetil.height = 4;
+            this.projetil.width = this.projetil.widthDefault;
+            this.projetil.height = this.projetil.heightDefault;
         }else if (this.direcao.baixo == 1){
             this.projetil.y = this.position.y+this.tamanho.height/2;
-            this.projetil.x = this.position.x+this.tamanho.width/2;
-            this.projetil.width = 4;
-            this.projetil.height = 16;
+            this.projetil.x = this.position.x+this.tamanho.width/4;
+            this.projetil.width = this.projetil.heightDefault;
+            this.projetil.height = this.projetil.widthDefault;
         }else if(this.direcao.esquerda == 1){
-            this.projetil.y = this.position.y;
+            this.projetil.y = this.position.y-this.projetil.heightDefault/2;
             this.projetil.x = this.position.x;
-            this.projetil.width = -16;
-            this.projetil.height = 4;
+            this.projetil.width = -this.projetil.widthDefault;
+            this.projetil.height = this.projetil.heightDefault;
         }
 
 

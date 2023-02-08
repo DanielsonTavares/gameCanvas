@@ -26,7 +26,7 @@ const keys = {
 
 const char2 = new Char({
   position: {x:0, y:300},
-  tamanho: {width:40, height:40},
+  tamanho: {width:30, height:50},
   color: '#FFFF00'
 });
 
