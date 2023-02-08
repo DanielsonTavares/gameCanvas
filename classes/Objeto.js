@@ -160,17 +160,7 @@ class Char extends Objeto{
         //     this.velocidade.y = 0
         // } else this.velocidade.y += gravity
 
-
-        if(this.disparo === 0){
-            this.checkDirecao();
-        }else{
-            this.projetil.x += 20;
-            
-        }
-        
-
-        
-        
+        this.checkDirecao();
 
         // Colisão com os limites da tela
         if(this.position.y <= 0){
