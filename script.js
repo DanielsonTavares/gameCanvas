@@ -25,8 +25,9 @@ const keys = {
   }
 
 const char2 = new Char({
-  position: {x:0, y:300},
+  position: {x:100, y:300},
   tamanho: {width:30, height:50},
+  velocidadePadraoMovimento: 3,
   color: '#FFFF00'
 });
 
@@ -40,7 +41,7 @@ tamanho: {
   width: 10,
   height:20
 },
-color: '#fa0',
+color: '#ff0000',
 velocidade: {
   x: 0,
   y: 0
@@ -62,7 +63,8 @@ listaObjetos.push(new ObjetoErrante({
   color: '#fa0',
   velocidade: {
     x: 0,
-    y: 0
+    y: 0,
+    v: -1
   },
   direcao: {
     x: -1,
@@ -82,7 +84,8 @@ listaObjetos.push(new ObjetoErrante({
   color: '#fa0',
   velocidade: {
     x: 0,
-    y: 0
+    y: 0,
+    v: -1
   },
   direcao: {
     x: -1,
@@ -102,7 +105,8 @@ listaObjetos.push(new ObjetoErrante({
   color: '#fa0',
   velocidade: {
     x: 0,
-    y: 0
+    y: 0,
+    v: -0.9
   },
   direcao: {
     x: -1,
@@ -112,7 +116,7 @@ listaObjetos.push(new ObjetoErrante({
 
 
 
-
+const velocidadePadrao = 3
 
 function animate(){
     window.requestAnimationFrame(animate);
@@ -125,65 +129,6 @@ function animate(){
     listaObjetos.forEach((o)=>{
       o.update();
     })
-    
-    
-    
-    
-
-
-    if(keys.ArrowLeft.pressed && keys.ArrowUp.pressed){
-      char2.velocidade.x = -5
-      char2.velocidade.y = -5
-    }
-
-    if(keys.ArrowLeft.pressed && keys.ArrowDown.pressed){
-      char2.velocidade.x = -5
-      char2.velocidade.y = 5
-    }
-
-    if(keys.ArrowRight.pressed && keys.ArrowUp.pressed){
-      char2.velocidade.x = 5
-      char2.velocidade.y = -5
-    }
-
-    if(keys.ArrowRight.pressed && keys.ArrowDown.pressed){
-      char2.velocidade.x = 5
-      char2.velocidade.y = 5
-    }
-
-
-    // Ao movimentar na diagonal, o lastKey impede que o objeto continue se
-    // se movimentando ao soltar uma das direções
-
-    // if (keys.ArrowLeft.pressed && char.lastKey === 'ArrowLeft') {
-    //     char.velocity.x = -5
-    
-    // } else if (keys.ArrowRight.pressed && char.lastKey === 'ArrowRight') {
-    //     char.velocity.x = 5
-
-    // } else if (keys.ArrowUp.pressed && char.lastKey === 'ArrowUp') {
-    //   char.velocity.y = -5
-
-    // } else if (keys.ArrowDown.pressed && char.lastKey === 'ArrowDown') {
-    //   char.velocity.y = 5
-    // } 
-
-    if (keys.ArrowLeft.pressed ) {
-        char2.velocidade.x = -5
-        char2.setDirecao('esquerda')
-    
-    } else if (keys.ArrowRight.pressed ) {
-        char2.velocidade.x = 5
-        char2.setDirecao('direita')
-
-    } else if (keys.ArrowUp.pressed ) {
-      char2.velocidade.y = -5
-      char2.setDirecao('cima')
-
-    } else if (keys.ArrowDown.pressed ) {
-      char2.velocidade.y = 5
-      char2.setDirecao('baixo')
-    } 
 }
 
 animate();
@@ -210,8 +155,17 @@ window.addEventListener('keydown', (event) => {
           keys.ArrowDown.pressed = true
           char2.lastKey = 'ArrowDown'
           break
+        case 'q':
+          console.log('Botao q');
+          break
         case 'w':
-          char2.velocity.y = -20
+          char2.skill.w.visivel = true;
+          setTimeout(()=>{
+            char2.skill.w.visivel = false
+          }, 2000)
+        break
+          case 'e':
+          console.log('Botao e');
           break
         case ' ':
           char2.projetil.visivel = true;

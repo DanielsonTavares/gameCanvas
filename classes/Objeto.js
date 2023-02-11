@@ -1,4 +1,6 @@
 class Objeto{
+    
+
     constructor({position, velocidade, color, tamanho}){
 
         this.position = position;
@@ -7,6 +9,8 @@ class Objeto{
         this.velocidade = velocidade || {x:0, y:0};
     }
 
+    
+
     draw(){
         //  ctx.fillStyle = this.color;
         //  ctx.fillRect(this.position.x, this.position.y, this.tamanho.width, this.tamanho.height);
@@ -14,8 +18,8 @@ class Objeto{
          ctx.fillStyle = this.color;
          ctx.fillRect(this.position.x, this.position.y, this.tamanho.width, this.tamanho.height);
 
-         this.position.x += this.velocidade.x
-         this.position.y += this.velocidade.y
+         this.position.x += this.velocidade.x;
+         this.position.y += this.velocidade.y;
     }
 
     update(){
@@ -28,11 +32,14 @@ class ObjetoErrante extends Objeto{
     constructor({position, velocidade, color, tamanho, direcao}){
         super({position, velocidade, color, tamanho})
         this.direcao = direcao;
+        
     }
 
 
 
     update(){
+        super.update();
+
 
         if(this.position.x <= 0){
             this.direcao.x = -1;
@@ -46,17 +53,15 @@ class ObjetoErrante extends Objeto{
             this.direcao.y = 1;
         }
 
-        this.velocidade.x = -5.5 * this.direcao.x
-        this.velocidade.y = -5.5 * this.direcao.y
-
-        super.update();
+        this.velocidade.x = this.velocidade.v * this.direcao.x
+        this.velocidade.y = this.velocidade.v * this.direcao.y
 
     }
 }
 
 class Char extends Objeto{
-    constructor({position, velocidade, color, tamanho}){
-        super({position, velocidade, color, tamanho})
+    constructor({position, velocidadePadraoMovimento, color, tamanho}){
+        super({position,  color, tamanho})
 
         
         this.projetil = {
@@ -69,7 +74,15 @@ class Char extends Objeto{
             heightDefault: 60
         };
 
-        this.disparo = 0;
+        this.velocidadePadraoMovimento = velocidadePadraoMovimento;
+        
+
+        this.skill = {
+            w: {visivel: false},
+            bonus: {velocidade: velocidadePadraoMovimento}
+        }
+
+        //this.disparo = 0;
 
         this.direcao = {
             cima: 0,
@@ -77,6 +90,8 @@ class Char extends Objeto{
             baixo:0,
             esquerda:0
         }
+
+        this.grid = {}
     }
 
     setDirecao(param){
@@ -159,22 +174,44 @@ class Char extends Objeto{
 
     }
 
+    drawSkill(skillAtributos){
+        
+        if(this.skill.w.visivel){
+            
+            this.velocidadePadraoMovimento = this.skill.bonus.velocidade*skillAtributos.velocidade;
+            
+            ctx.globalCompositeOperation='destination-over'; //para renderizar por tras do char
+            // ctx.fillStyle = "#0000FF";
+            // ctx.globalAlpha = 0.2;
+            // ctx.fillRect((this.position.x+this.tamanho.width/2)-skill.w/2, (this.position.y+this.tamanho.height/2)-skill.h/2, skill.w, skill.h);
+            // ctx.globalAlpha = 1.0;
+
+            ctx.fillStyle = "#0000FF";
+            ctx.globalAlpha = 0.2;
+            ctx.beginPath();
+            ctx.arc((this.position.x+this.tamanho.width/2), (this.position.y+this.tamanho.height/2), skillAtributos.raio, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.globalAlpha = 1.0;
+        }else{
+            this.velocidadePadraoMovimento = this.skill.bonus.velocidade;
+        }
+    }
+    
     draw(){
         super.draw();
-
-        this.x += this.velocidade.x
-        this.y += this.velocidade.y
-
-        this.velocidade.x = 0
-        this.velocidade.y = 0 //Desabilitar para ter o efeito da gravidade
 
         if(this.projetil.visivel){
             ctx.fillStyle = "#FF0000";
             //ctx.fillRect(this.projetil.x, this.projetil.y+this.tamanho.height/2, this.projetil.width, this.projetil.height);
             ctx.fillRect(this.projetil.x, this.projetil.y, this.projetil.width, this.projetil.height);
         }
-        
 
+        this.drawSkill({raio: 100, velocidade: 2.0}); 
+        
+        
+        
+         this.velocidade.x = 0
+         this.velocidade.y = 0 //Desabilitar para ter o efeito da gravidade        
     }
 
     update(){
@@ -186,7 +223,72 @@ class Char extends Objeto{
         // } else this.velocidade.y += gravity
 
         this.checkDirecao();
+        
+        this.movimentacao();
 
+        this.colisao();
+        
+    }
+
+
+    movimentacao(){
+
+        if(keys.ArrowLeft.pressed && keys.ArrowUp.pressed){
+            this.velocidade.x = -this.velocidadePadraoMovimento
+            this.velocidade.y = -this.velocidadePadraoMovimento
+          }
+      
+          if(keys.ArrowLeft.pressed && keys.ArrowDown.pressed){
+            this.velocidade.x = -this.velocidadePadraoMovimento
+            this.velocidade.y = this.velocidadePadraoMovimento
+          }
+      
+          if(keys.ArrowRight.pressed && keys.ArrowUp.pressed){
+            this.velocidade.x = this.velocidadePadraoMovimento
+            this.velocidade.y = -this.velocidadePadraoMovimento
+          }
+      
+          if(keys.ArrowRight.pressed && keys.ArrowDown.pressed){
+            this.velocidade.x = this.velocidadePadraoMovimento
+            this.velocidade.y = this.velocidadePadraoMovimento
+          }
+      
+      
+          // Ao movimentar na diagonal, o lastKey impede que o objeto continue se
+          // se movimentando ao soltar uma das direções
+      
+          // if (keys.ArrowLeft.pressed && char.lastKey === 'ArrowLeft') {
+          //     char.velocity.x = -5
+          
+          // } else if (keys.ArrowRight.pressed && char.lastKey === 'ArrowRight') {
+          //     char.velocity.x = 5
+      
+          // } else if (keys.ArrowUp.pressed && char.lastKey === 'ArrowUp') {
+          //   char.velocity.y = -5
+      
+          // } else if (keys.ArrowDown.pressed && char.lastKey === 'ArrowDown') {
+          //   char.velocity.y = 5
+          // } 
+
+        if (keys.ArrowLeft.pressed ) {
+            this.velocidade.x = -this.velocidadePadraoMovimento
+            this.setDirecao('esquerda')
+        
+        } else if (keys.ArrowRight.pressed ) {
+            this.velocidade.x = this.velocidadePadraoMovimento
+            this.setDirecao('direita')
+    
+        } else if (keys.ArrowUp.pressed ) {
+          this.velocidade.y = -this.velocidadePadraoMovimento
+          this.setDirecao('cima')
+    
+        } else if (keys.ArrowDown.pressed ) {
+          this.velocidade.y = this.velocidadePadraoMovimento
+          this.setDirecao('baixo')
+        } 
+    }
+
+    colisao(){
         // Colisão com os limites da tela
         if(this.position.y <= 0){
             this.position.y = 0;
