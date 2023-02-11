@@ -115,9 +115,6 @@ listaObjetos.push(new ObjetoErrante({
 }));
 
 
-
-const velocidadePadrao = 3
-
 function animate(){
     window.requestAnimationFrame(animate);
 
@@ -177,20 +174,20 @@ window.addEventListener('keydown', (event) => {
 
     });
 
-    window.addEventListener('keyup', (event) => {
-        switch (event.key) {
-          case 'ArrowRight':
-            keys.ArrowRight.pressed = false
-            break
-          case 'ArrowLeft':
-            keys.ArrowLeft.pressed = false
-            break
-          case 'ArrowUp':
-            keys.ArrowUp.pressed = false
-            break
-          case 'ArrowDown':
-            keys.ArrowDown.pressed = false
-            break
-        }
-      
-      })
+window.addEventListener('keyup', (event) => {
+    switch (event.key) {
+      case 'ArrowRight':
+        keys.ArrowRight.pressed = false
+        break
+      case 'ArrowLeft':
+        keys.ArrowLeft.pressed = false
+        break
+      case 'ArrowUp':
+        keys.ArrowUp.pressed = false
+        break
+      case 'ArrowDown':
+        keys.ArrowDown.pressed = false
+        break
+    }
+  
+  })

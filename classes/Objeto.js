@@ -12,9 +12,6 @@ class Objeto{
     
 
     draw(){
-        //  ctx.fillStyle = this.color;
-        //  ctx.fillRect(this.position.x, this.position.y, this.tamanho.width, this.tamanho.height);
-
          ctx.fillStyle = this.color;
          ctx.fillRect(this.position.x, this.position.y, this.tamanho.width, this.tamanho.height);
 
@@ -94,86 +91,6 @@ class Char extends Objeto{
         this.grid = {}
     }
 
-    setDirecao(param){
-        switch (param) {
-            case 'cima':
-                this.direcao.cima = 1;
-                this.direcao.direita = 0;
-                this.direcao.baixo = 0;
-                this.direcao.esquerda = 0;
-                break;
-            case 'direita':
-                this.direcao.cima = 0;
-                this.direcao.direita = 1;
-                this.direcao.baixo = 0;
-                this.direcao.esquerda = 0;
-                break;
-            case 'baixo':
-                this.direcao.cima = 0;
-                this.direcao.direita = 0;
-                this.direcao.baixo = 1;
-                this.direcao.esquerda = 0;
-                break;
-            case 'esquerda':
-                this.direcao.cima = 0;
-                this.direcao.direita = 0;
-                this.direcao.baixo = 0;
-                this.direcao.esquerda = 1;
-                break;
-            default:
-                break;
-        }
-    }
-
-    checkDirecao(){
-
-        // if(this.direcao.cima == 1){
-        //     this.projetil.y = this.position.y-this.tamanho.height;
-        //     this.projetil.x = this.position.x+ this.projetil.widthDefault/4;
-        //     this.projetil.width = this.projetil.heightDefault;
-        //     this.projetil.height = this.projetil.widthDefault;
-        // } else if(this.direcao.direita == 1){
-        //     this.projetil.y = this.position.y-this.projetil.heightDefault/2;
-        //     this.projetil.x = this.position.x + this.tamanho.width
-        //     this.projetil.width = this.projetil.widthDefault;
-        //     this.projetil.height = this.projetil.heightDefault;
-        // }else if (this.direcao.baixo == 1){
-        //     this.projetil.y = this.position.y+this.tamanho.height/2;
-        //     this.projetil.x = this.position.x+this.tamanho.width/4;
-        //     this.projetil.width = this.projetil.heightDefault;
-        //     this.projetil.height = this.projetil.widthDefault;
-        // }else if(this.direcao.esquerda == 1){
-        //     this.projetil.y = this.position.y-this.projetil.heightDefault/2;
-        //     this.projetil.x = this.position.x;
-        //     this.projetil.width = -this.projetil.widthDefault;
-        //     this.projetil.height = this.projetil.heightDefault;
-        // }
-
-
-        if(this.direcao.cima == 1){
-            this.projetil.y = this.position.y-this.projetil.height;  
-            this.projetil.x = this.position.x + this.tamanho.width/2 - (this.projetil.width/2);
-            this.projetil.width = this.projetil.heightDefault;
-            this.projetil.height = this.projetil.widthDefault;
-        } else if(this.direcao.direita == 1){
-            this.projetil.y = this.position.y + this.tamanho.height/2 - (this.projetil.height/2);
-            this.projetil.x = this.position.x + this.tamanho.width
-            this.projetil.width = this.projetil.widthDefault;
-            this.projetil.height = this.projetil.heightDefault;
-        }else if (this.direcao.baixo == 1){
-            this.projetil.y = this.position.y+this.tamanho.height;
-            this.projetil.x = this.position.x + this.tamanho.width/2 - (this.projetil.width/2);
-            this.projetil.width = this.projetil.heightDefault;
-            this.projetil.height = this.projetil.widthDefault;
-        }else if(this.direcao.esquerda == 1){
-            this.projetil.y = this.position.y + this.tamanho.height/2 - (this.projetil.height/2);
-            this.projetil.x = this.position.x;
-            this.projetil.width = -this.projetil.widthDefault;
-            this.projetil.height = this.projetil.heightDefault;
-        }
-
-    }
-
     drawSkill(skillAtributos){
         
         if(this.skill.w.visivel){
@@ -206,7 +123,7 @@ class Char extends Objeto{
             ctx.fillRect(this.projetil.x, this.projetil.y, this.projetil.width, this.projetil.height);
         }
 
-        this.drawSkill({raio: 100, velocidade: 2.0}); 
+        this.drawSkill({raio: 100, velocidade: 1.5}); 
         
         
         
@@ -230,6 +147,65 @@ class Char extends Objeto{
         
     }
 
+
+
+
+    checkDirecao(){
+
+        if(this.direcao.cima == 1){
+            this.projetil.y = this.position.y-this.projetil.height;  
+            this.projetil.x = this.position.x + this.tamanho.width/2 - (this.projetil.width/2);
+            this.projetil.width = this.projetil.heightDefault;
+            this.projetil.height = this.projetil.widthDefault;
+        } else if(this.direcao.direita == 1){
+            this.projetil.y = this.position.y + this.tamanho.height/2 - (this.projetil.height/2);
+            this.projetil.x = this.position.x + this.tamanho.width
+            this.projetil.width = this.projetil.widthDefault;
+            this.projetil.height = this.projetil.heightDefault;
+        }else if (this.direcao.baixo == 1){
+            this.projetil.y = this.position.y+this.tamanho.height;
+            this.projetil.x = this.position.x + this.tamanho.width/2 - (this.projetil.width/2);
+            this.projetil.width = this.projetil.heightDefault;
+            this.projetil.height = this.projetil.widthDefault;
+        }else if(this.direcao.esquerda == 1){
+            this.projetil.y = this.position.y + this.tamanho.height/2 - (this.projetil.height/2);
+            this.projetil.x = this.position.x;
+            this.projetil.width = -this.projetil.widthDefault;
+            this.projetil.height = this.projetil.heightDefault;
+        }
+
+    }
+
+    setDirecao(param){
+        switch (param) {
+            case 'cima':
+                this.direcao.cima = 1;
+                this.direcao.direita = 0;
+                this.direcao.baixo = 0;
+                this.direcao.esquerda = 0;
+                break;
+            case 'direita':
+                this.direcao.cima = 0;
+                this.direcao.direita = 1;
+                this.direcao.baixo = 0;
+                this.direcao.esquerda = 0;
+                break;
+            case 'baixo':
+                this.direcao.cima = 0;
+                this.direcao.direita = 0;
+                this.direcao.baixo = 1;
+                this.direcao.esquerda = 0;
+                break;
+            case 'esquerda':
+                this.direcao.cima = 0;
+                this.direcao.direita = 0;
+                this.direcao.baixo = 0;
+                this.direcao.esquerda = 1;
+                break;
+            default:
+                break;
+        }
+    }
 
     movimentacao(){
 
