@@ -74,19 +74,35 @@ class Char extends Objeto{
         this.velocidadePadraoMovimento = velocidadePadraoMovimento;
         
 
-        this.skill = {
-            w: {visivel: false},
-            bonus: {velocidade: velocidadePadraoMovimento}
-        }
-
-        //this.disparo = 0;
-
         this.direcao = {
             cima: 0,
             direita:1,
             baixo:0,
             esquerda:0
         }
+
+
+        this.skill = {
+            w: {visivel: false},
+            e: {visivel: false},
+            bonus: {velocidade: velocidadePadraoMovimento},
+        
+            teleporte: ()=>{
+                if(this.direcao.direita == 1){
+                    this.position.x += 200;
+                }else if(this.direcao.esquerda == 1){
+                    this.position.x -= 200;
+                }if(this.direcao.cima == 1){
+                    this.position.y -= 200;
+                }if(this.direcao.baixo == 1){
+                    this.position.y += 200;
+                }
+            }
+        
+        }
+
+        //this.disparo = 0;
+
 
         this.grid = {}
     }
@@ -112,6 +128,8 @@ class Char extends Objeto{
         }else{
             this.velocidadePadraoMovimento = this.skill.bonus.velocidade;
         }
+
+
     }
     
     draw(){
@@ -123,7 +141,7 @@ class Char extends Objeto{
             ctx.fillRect(this.projetil.x, this.projetil.y, this.projetil.width, this.projetil.height);
         }
 
-        this.drawSkill({raio: 100, velocidade: 1.5}); 
+        this.drawSkill({raio: 100, velocidade: 2.0}); 
         
         
         

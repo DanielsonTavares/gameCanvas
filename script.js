@@ -154,6 +154,11 @@ window.addEventListener('keydown', (event) => {
           break
         case 'q':
           console.log('Botao q');
+          char2.skill.teleporte();
+          // char2.skill.e.visivel = true;
+          // setTimeout(()=>{
+          //   char2.skill.e.visivel = false
+          // }, 5)
           break
         case 'w':
           char2.skill.w.visivel = true;
@@ -162,7 +167,7 @@ window.addEventListener('keydown', (event) => {
           }, 2000)
         break
           case 'e':
-          console.log('Botao e');
+            console.log('Botao e');
           break
         case ' ':
           char2.projetil.visivel = true;
