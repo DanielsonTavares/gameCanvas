@@ -56,6 +56,42 @@ class ObjetoErrante extends Objeto{
     }
 }
 
+class Enemy extends Objeto{
+
+    constructor({position, velocidadePadraoMovimento, color, tamanho, hero}){
+        super({position,  color, tamanho})
+
+        this.velocidadePadraoMovimento = velocidadePadraoMovimento;
+        this.hero = hero;
+    }
+
+    update(){
+        super.update();
+        this.move();
+    }
+    move = ()=>{
+        let dx = this.position.x - this.hero.position.x;
+        let dy = this.position.y - this.hero.position.y;
+        
+          if(dy <= 0){
+            this.position.y += this.velocidadePadraoMovimento
+          }
+        
+          if(dy >= 0){
+            this.position.y -= this.velocidadePadraoMovimento
+          }
+      
+          if(dx <= 0){
+            this.position.x += this.velocidadePadraoMovimento
+          }
+      
+          if(dx >= 0){
+            this.position.x -=this.velocidadePadraoMovimento
+          }
+        
+      }
+}
+
 class Char extends Objeto{
     constructor({position, velocidadePadraoMovimento, color, tamanho}){
         super({position,  color, tamanho})

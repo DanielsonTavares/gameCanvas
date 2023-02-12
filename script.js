@@ -32,7 +32,7 @@ const char2 = new Char({
 });
 
 
-const enemy = new Objeto({
+const enemy = new Enemy({
 position: {
   x: 900,
   y: 200
@@ -42,12 +42,28 @@ tamanho: {
   height:20
 },
 color: '#ff0000',
-velocidade: {
-  x: 0,
-  y: 0
-}
+velocidadePadraoMovimento: 0.5,
+hero: char2
 }
 );
+
+const enemy1 = new Enemy({
+  position: {
+    x: 0,
+    y: 100
+  },
+  tamanho: {
+    width: 10,
+    height:20
+  },
+  color: '#00bb00',
+  velocidadePadraoMovimento: 0.5,
+  hero: char2
+  }
+  );
+  
+
+
 
 const listaObjetos = []
 
@@ -123,6 +139,8 @@ function animate(){
     char2.update();
     enemy.update();
     
+    enemy1.update();
+
     listaObjetos.forEach((o)=>{
       o.update();
     })
